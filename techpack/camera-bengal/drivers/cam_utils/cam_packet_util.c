@@ -132,12 +132,11 @@ int cam_packet_util_get_kmd_buffer(struct cam_packet *packet,
 	}
 
 	remain_len -= (size_t)cmd_desc->offset;
-	if ((size_t)packet->kmd_cmd_buf_offset >= remain_len) {
-		CAM_ERR(CAM_UTIL, "Invalid kmd cmd buf offset: %zu",
-			(size_t)packet->kmd_cmd_buf_offset);
-		rc = -EINVAL;
-		goto rel_kmd_buf;
-	}
+        if ((size_t)packet->kmd_cmd_buf_offset >= remain_len) {
+                CAM_ERR(CAM_UTIL, "Invalid kmd cmd buf offset: %zu",
+                        (size_t)packet->kmd_cmd_buf_offset);
+                return -EINVAL;
+        }
 
 	cpu_addr += (cmd_desc->offset / 4) + (packet->kmd_cmd_buf_offset / 4);
 	CAM_DBG(CAM_UTIL, "total size %d, cmd size: %d, KMD buffer size: %d",
